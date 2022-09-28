@@ -8,3 +8,10 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require_tree .
+
+// Aqui usamos ajax para que se ejecute el código sin tener que recargar la página
+$(document).ready(function() {
+    $('#stock-lookup-form').on('ajax:complete', function(event, data, status) {
+        $('#results').html(data.responseText)
+    })
+})

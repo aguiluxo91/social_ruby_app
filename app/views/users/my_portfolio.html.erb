@@ -1,0 +1,21 @@
+<h1>My Portfolio</h1>
+
+<h3>Search for Stocks</h3>
+<div id="stock-lookup">
+    <%= form_tag search_stocks_path, remote: true, method: :get, id: "stock-lookup-form" do %>
+        <div class="form-group row no-padding text-center col-md-12">
+            <div class="col-md-10">
+                <%= text_field_tag :stock, params[:stock], placeholder: "Stock ticker symbol", autofocus: true, class: "form-control search-box input-lg" %>
+            </div>
+            <div class="col-md-2">
+                <%= button_tag(type: :submit, class: "btn btn-lg btn-success") do %>
+                    <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8.5" r="5"/><path d="m17.571 17.5-5.571-5.5"/></g></svg> Look up a Stock
+                <% end %>
+            </div>
+        </div>
+    <% end %>
+</div>
+
+<div id="results">
+    <%= render 'result' %>
+</div>
