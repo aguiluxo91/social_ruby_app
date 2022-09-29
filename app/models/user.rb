@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -10,14 +12,16 @@ class User < ApplicationRecord
   has_many :friends, through: :friendships
 
   def full_name
-    return "#{first_name} #{last_name}".strip if (first_name || last_name)
-    "Anonymous"
+    return "#{first_name} #{last_name}".strip if first_name || last_name
+
+    'Anonymous'
   end
 
   def stock_already_added?(ticker_symbol)
     stock = Stock.find_by_ticker(ticker_symbol)
     return false unless stock
-    user_stocks.where(stock_id: stock.id).exists? 
+
+    user_stocks.where(stock_id: stock.id).exists?
   end
 
   def under_stock_limit?
@@ -33,6 +37,7 @@ class User < ApplicationRecord
     param.downcase!
     to_send_back = (first_name_matches(param) + last_name_matches(param) + email_matches(param)).uniq
     return nil unless to_send_back
+
     to_send_back
   end
 
@@ -53,10 +58,10 @@ class User < ApplicationRecord
   end
 
   def except_current_user(users)
-    users.reject { |user| user.id == self.id }
+    users.reject { |user| user.id == id }
   end
 
   def not_friends_with?(friend_id)
-    friendships.where(friend_id: friend_id).count < 1
+    friendships.where(friend_id:).count < 1
   end
 end
